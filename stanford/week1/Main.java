@@ -5,6 +5,9 @@ import java.util.List;
 
 import static java.lang.Math.max;
 
+/**
+multiplication algorithm
+**/
 public class Main {
 
     public static void main(String[] args) {
@@ -62,7 +65,7 @@ public class Main {
         int carry = 0;
         for (int i = maxSize - 1; i >= 0; i--) {
             int s = xNormalized.get(i) + yNormalized.get(i) + carry;
-            ArrayList<Integer> temp = toInverseArray(s);
+            List<Integer> temp = toInverseArray(s);
             result.add(temp.get(0));
             if (temp.size() == 2) {
                 carry = temp.get(1);
