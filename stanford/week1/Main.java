@@ -22,7 +22,7 @@ public class Main {
     }
 
     List<Integer> strToArray(String s) {
-        ArrayList<Integer> result = new ArrayList<>();
+        List<Integer> result = new ArrayList<>();
         int size = s.length();
         for (int i = 0; i < size; i++) {
             result.add(Integer.parseInt(s.charAt(i) + ""));
@@ -30,7 +30,7 @@ public class Main {
         return result;
     }
 
-    ArrayList<Integer> bigProduct(List<Integer> x, List<Integer> y) {
+    List<Integer> bigProduct(List<Integer> x, List<Integer> y) {
 
         if (x.size() == 1 && y.size() == 1) {
             return toArray(x.get(0) * y.get(0));
@@ -49,7 +49,7 @@ public class Main {
     }
 
 
-    ArrayList<Integer> sum(List<Integer> x, List<Integer> y) {
+    List<Integer> sum(List<Integer> x, List<Integer> y) {
         int sizeX = x.size();
         int sizeY = y.size();
 
@@ -57,7 +57,7 @@ public class Main {
         List<Integer> xNormalized = prepandZeros(maxSize, x);
         List<Integer> yNormalized = prepandZeros(maxSize, y);
 
-        ArrayList<Integer> result = new ArrayList<>();
+        List<Integer> result = new ArrayList<>();
 
         int carry = 0;
         for (int i = maxSize - 1; i >= 0; i--) {
@@ -81,15 +81,15 @@ public class Main {
         return result;
     }
 
-    ArrayList<Integer> toArray(Integer i) {
-        ArrayList<Integer> result = toInverseArray(i);
+    List<Integer> toArray(Integer i) {
+        List<Integer> result = toInverseArray(i);
         Collections.reverse(result);
         return result;
     }
 
-    ArrayList<Integer> toInverseArray(Integer i) {
+    List<Integer> toInverseArray(Integer i) {
 
-        ArrayList<Integer> result = new ArrayList<>();
+        List<Integer> result = new ArrayList<>();
         if (i == 0) {
             result.add(0);
             return result;
@@ -102,8 +102,8 @@ public class Main {
         return result;
     }
 
-    ArrayList<Integer> addZeros(int n, List<Integer> arr) {
-        ArrayList<Integer> result = new ArrayList<>(arr);
+    List<Integer> addZeros(int n, List<Integer> arr) {
+        List<Integer> result = new ArrayList<>(arr);
         for (int i = 0; i < n; i++) {
             result.add(0);
         }
@@ -114,7 +114,7 @@ public class Main {
         if (n == arr.size()) {
             return arr;
         }
-        ArrayList<Integer> result = new ArrayList<>();
+        List<Integer> result = new ArrayList<>();
         int numberOfZerosToPrepend = n - arr.size();
         for (int i = 0; i < numberOfZerosToPrepend; i++) {
             result.add(0);
