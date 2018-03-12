@@ -1,17 +1,40 @@
 import java.util.*;
+import java.nio.file.*;
 
+/**
+File input.txt contains all of the 100,000 integers between 1 and 100,000 (inclusive) in some order, with no integer repeated.
+
+Your task is to compute the number of inversions in the file given, where the ith row of the file indicates the ith entry of an array.
+**/
 class Inversions {
 
 	public static void main(String args[]){
-			Tuple t = sortCount(Arrays.asList(2, 1, 4, 3, 6, 5));
+			Tuple t = sortCount(init("input.txt"));
 			System.out.println(t.splitsNumber);
-			t.array.forEach(System.out::print);
+	}
+
+	static List<Integer> init(String fileName){
+		List<Integer> numbers = new ArrayList<>();
+		try{
+			Path path = Paths.get(fileName);
+			Scanner scanner = new Scanner(path);
+			while (scanner.hasNext()) {
+    		if (scanner.hasNextInt()) {
+        	numbers.add(scanner.nextInt());
+    		} else {
+        	scanner.next();
+    		}
+			}
+		} catch(Exception e){
+			System.out.println(e.getMessage());
+		}
+		return numbers; 
 	}
 
 	static Tuple sortCount(List<Integer> A){
 			int n = A.size();
 			if (n == 1) {
-				return new Tuple(A, 0);
+				return new Tuple(A, 0L);
 			}
 			Tuple Bx = sortCount(A.subList(0, n/2));
 			Tuple Cy = sortCount(A.subList(n/2, n));
@@ -29,7 +52,7 @@ class Inversions {
 			// counter for array D
 			int d = 0;
 			// running sum of splits Numbers
-			int splitsNumber = 0;
+			Long splitsNumber = 0L;
 
 			while (D.size() < (B.size() + C.size())) {
 				// all elements from C have been copied to D
@@ -59,9 +82,9 @@ class Inversions {
 
 	static class Tuple {
 		final List<Integer> array;
-		final int splitsNumber;
+		final Long splitsNumber;
 
-		public Tuple(List<Integer> array, int splitsNumber){
+		public Tuple(List<Integer> array, Long splitsNumber){
 			this.array = array;
 			this.splitsNumber = splitsNumber;
 		}
