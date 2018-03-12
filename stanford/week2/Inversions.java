@@ -3,10 +3,20 @@ import java.util.*;
 class Inversions {
 
 	public static void main(String args[]){
-			Tuple t = mergeAndCountSplit(Arrays.asList(1, 3, 5), Arrays.asList(2, 4, 6));
+			Tuple t = sortCount(Arrays.asList(2, 1, 4, 3, 6, 5));
 			System.out.println(t.splitsNumber);
-			System.out.println(t.array.size());
 			t.array.forEach(System.out::print);
+	}
+
+	static Tuple sortCount(List<Integer> A){
+			int n = A.size();
+			if (n == 1) {
+				return new Tuple(A, 0);
+			}
+			Tuple Bx = sortCount(A.subList(0, n/2));
+			Tuple Cy = sortCount(A.subList(n/2, n));
+			Tuple Dx = mergeAndCountSplit(Bx.array, Cy.array);
+			return new Tuple(Dx.array, Bx.splitsNumber + Cy.splitsNumber + Dx.splitsNumber);
 	}
 
 	static Tuple mergeAndCountSplit(List<Integer> B, List<Integer> C) {
