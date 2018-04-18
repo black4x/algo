@@ -5,12 +5,14 @@ import java.util.Scanner;
 
 /**
  * Implementation of quick sort.
- * use first element as a pivot in order to count all comparisons from the tast of week 3
+ * using the "median-of-three" pivot rule.
+ * [The primary motivation behind this rule is to do a little bit of extra work
+ * to get much better performance on input arrays that are nearly sorted or reverse sorted.]
  */
 
 public class AQuickSort {
 
-    // number of comparisons 
+    // number of comparisons
     static long runningTotal = 0;
 
     public static void main(String args[]) throws IOException {
