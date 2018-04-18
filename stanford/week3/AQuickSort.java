@@ -10,69 +10,18 @@ import java.util.Scanner;
 
 public class AQuickSort {
 
+    // number of comparisons 
     static long runningTotal = 0;
 
-    public static void main(String argsp[]) throws IOException {
+    public static void main(String args[]) throws IOException {
         AQuickSort aQuickSort = new AQuickSort();
-        final ArrayTuple result = new ArrayTuple(aQuickSort.initFromFile("quicksort.txt"), 0);
-        aQuickSort.sort(result, 0, result.a.length);
-        for (int i = 0; i < result.a.length; i++) {
-            System.out.print(result.a[i] + " ");
-        }
-        System.out.println("---");
-        for (int i = 0; i < result.a.length - 1; i++) {
-            if (result.a[i] > result.a[i + 1]) {
-                System.out.println("FUCK!");
-            }
-        }
-        System.out.println("\npivot index = " + result.pivotIndex);
-        System.out.println("total comparisons = " + runningTotal);
-        runningTotal = 0;
 
-        final ArrayTuple resultRight = new ArrayTuple(aQuickSort.initFromFile("quicksort.txt"), 0);
-        aQuickSort.sortRight(resultRight, 0, resultRight.a.length);
-        for (int i = 0; i < resultRight.a.length; i++) {
-            System.out.print(resultRight.a[i] + " ");
-        }
-        System.out.println("\n--- identity check --- ");
-        for (int i = 0; i < resultRight.a.length; i++) {
-            if (resultRight.a[i] != result.a[i]) {
-                System.out.println(resultRight.a[i] + " != " + result.a[i]);
-            }
-        }
-        System.out.println("total comparisons = " + runningTotal);
-        runningTotal = 0;
-
-        final ArrayTuple resultMedian = new ArrayTuple(aQuickSort.initFromFile("quicksort.txt"), 0);
+        final ArrayTuple resultMedian = new ArrayTuple(aQuickSort.initFromFile("quicksort.txt", 10000));
         aQuickSort.sortMedianOfThree(resultMedian, 0, resultMedian.a.length);
-        for (int i = 0; i < resultMedian.a.length; i++) {
-            System.out.print(resultMedian.a[i] + " ");
-        }
-        System.out.println("\n--- identity check --- ");
-        for (int i = 0; i < resultMedian.a.length; i++) {
-            if (resultMedian.a[i] != result.a[i]) {
-                System.out.println(resultMedian.a[i] + " != " + result.a[i]);
-            }
-        }
+
         System.out.println("total comparisons = " + runningTotal);
     }
 
-    private void sort(ArrayTuple at, int left, int right) {
-        if (left >= right) return;
-        runningTotal += (right - left - 1);
-        ArrayTuple newPartitionedArray = partition(at.a, left, right);
-        sort(newPartitionedArray, left, newPartitionedArray.pivotIndex);
-        sort(newPartitionedArray, newPartitionedArray.pivotIndex + 1, right);
-    }
-
-    private void sortRight(ArrayTuple at, int left, int right) {
-        if (left >= right) return;
-        runningTotal += (right - left - 1);
-        swap(at.a, left, right - 1);
-        ArrayTuple newPartitionedArray = partition(at.a, left, right);
-        sortRight(newPartitionedArray, left, newPartitionedArray.pivotIndex);
-        sortRight(newPartitionedArray, newPartitionedArray.pivotIndex + 1, right);
-    }
 
     private void sortMedianOfThree(ArrayTuple at, int left, int right) {
         if (left >= right) return;
@@ -103,8 +52,10 @@ public class AQuickSort {
     }
 
     private int calcMedianIndex(int left, int right) {
-        int size = right - left + 1;
-        return size / 2 - 1;
+        int size = right - left;
+        if (size % 2 == 0) return size / 2 - 1 + left;
+        else return size / 2 + left;
+
     }
 
     // partitioning the array around the pivot with the invariant:
@@ -136,8 +87,8 @@ public class AQuickSort {
         a[index2] = buffer;
     }
 
-    private int[] initFromFile(String fileName) throws IOException {
-        int[] result = new int[10000];
+    private int[] initFromFile(String fileName, int N) throws IOException {
+        int[] result = new int[N];
         Path path = Paths.get(fileName);
         Scanner scanner = new Scanner(path);
         int i = 0;
@@ -149,11 +100,15 @@ public class AQuickSort {
 
     private static class ArrayTuple {
         int[] a;
-        int pivotIndex;
+        int pivotIndex = 0;
 
-        public ArrayTuple(int[] a, int pivotIndex) {
+        ArrayTuple(int[] a, int pivotIndex) {
             this.a = a;
             this.pivotIndex = pivotIndex;
+        }
+
+        ArrayTuple(int[] a) {
+            this.a = a;
         }
     }
 
